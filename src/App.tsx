@@ -3,6 +3,7 @@ import { Menu, X, ArrowDown, ArrowRight, ExternalLink, Mail, Link, Phone, Sun, M
 import Lenis from "@studio-freight/lenis";
 import { Lightning } from "./Lightning";
 import { LogoWordmark } from "./Logo";
+import { PageTransition } from "./components/PageTransition";
 
 const projects = [
   { id: 1, title: "Student Performance Analytics", description: "Data analysis system for tracking and visualizing student performance metrics.", technologies: ["Python", "Pandas", "SQL", "Statistics", "Data Visualization"], github: "https://github.com/bigg8t27-sudo", demo: "https://example.com" },
@@ -201,6 +202,7 @@ export default function App() {
       `}</style>
 
       <div className={theme === "dark" ? "dark-mode" : "light-mode"}>
+        <PageTransition accent="#00E5FF" duration={1800} />
         <ScrollProgressBar pct={scrollPct} accent={t.accentGlow} />
 
         {/* ── Desktop Nav ── */}

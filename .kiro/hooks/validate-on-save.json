@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Validate TypeScript, Lint, and Tests on Save",
+      "trigger": "PostFileSave",
+      "description": "Runs TypeScript type checking, ESLint, and tests after saving TypeScript/JavaScript files. Reports issues without auto-fixing.",
+      "matcher": "\\.(ts|tsx|js|jsx)$",
+      "action": {
+        "type": "command",
+        "command": "powershell -Command \"\n  # Get the saved file path from stdin\n  \\$context = \\$input | ConvertFrom-Json\n  \\$filePath = \\$context.filePath\n  \n  # Only validate source files, not build output or node_modules\n  if (\\$filePath -match '(node_modules|dist|build|\\.next)') {\n    exit 0\n  }\n  \n  Write-Host \\\"🔍 Validating: \\$filePath\\\" -ForegroundColor Cyan\n  \n  \\$errors = \\$false\n  \n  # 1. TypeScript type checking\n  Write-Host \\\"  → TypeScript check...\\\" -ForegroundColor Gray\n  \\$tsOutput = npx tsc --noEmit 2>&1\n  if (\\$LASTEXITCODE -ne 0) {\n    Write-Host \\\"❌ TypeScript errors found:\\\" -ForegroundColor Red\n    Write-Host \\$tsOutput -ForegroundColor Red\n    \\$errors = \\$true\n  } else {\n    Write-Host \\\"  ✓ TypeScript OK\\\" -ForegroundColor Green\n  }\n  \n  # 2. ESLint\n  if (Test-Path '.eslintrc*') {\n    Write-Host \\\"  → ESLint check...\\\" -ForegroundColor Gray\n    \\$lintOutput = npx eslint \\$filePath 2>&1\n    if (\\$LASTEXITCODE -ne 0) {\n      Write-Host \\\"❌ ESLint errors found:\\\" -ForegroundColor Red\n      Write-Host \\$lintOutput -ForegroundColor Red\n      \\$errors = \\$true\n    } else {\n      Write-Host \\\"  ✓ ESLint OK\\\" -ForegroundColor Green\n    }\n  }\n  \n  # 3. Run tests if test file exists\n  if (Test-Path '*.test.ts' -o Test-Path '*.spec.ts' -o Test-Path '*.test.tsx' -o Test-Path '*.spec.tsx') {\n    Write-Host \\\"  → Running tests...\\\" -ForegroundColor Gray\n    \\$testOutput = npx vitest run 2>&1\n    if (\\$LASTEXITCODE -ne 0) {\n      Write-Host \\\"❌ Tests failed:\\\" -ForegroundColor Red\n      Write-Host \\$testOutput -ForegroundColor Red\n      \\$errors = \\$true\n    } else {\n      Write-Host \\\"  ✓ Tests passed\\\" -ForegroundColor Green\n    }\n  }\n  \n  if (\\$errors) {\n    Write-Host \\\"\\\" \n    Write-Host \\\"⚠️  Validation issues found. Review and fix the root cause.\\\" -ForegroundColor Yellow\n    exit 0\n  } else {\n    Write-Host \\\"✅ All checks passed\\\" -ForegroundColor Green\n    exit 0\n  }\n\"",
+        "timeout": 120
+      }
+    }
+  ]
+}

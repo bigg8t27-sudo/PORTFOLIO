@@ -5,6 +5,8 @@ import { Lightning } from "./Lightning";
 import { LogoWordmark } from "./Logo";
 import { PageTransition } from "./components/PageTransition";
 import { IntroScreen } from "./components/IntroScreen";
+import { GlitchLogo } from "./components/GlitchLogo";
+import { HoverHeading } from "./components/HoverHeading";
 
 const projects = [
   { id: 1, title: "Student Performance Analytics", description: "Data analysis system for tracking and visualizing student performance metrics.", technologies: ["Python", "Pandas", "SQL", "Statistics", "Data Visualization"], github: "https://github.com/bigg8t27-sudo", demo: "https://example.com" },
@@ -213,7 +215,7 @@ export default function App() {
         {/* ── Desktop Nav ── */}
         <nav className="nav-desktop" style={{ position: "fixed", top: 2, left: 0, right: 0, zIndex: 50, transition: "all 0.3s", backgroundColor: isScrolled ? t.bgNav : "transparent", backdropFilter: isScrolled ? "blur(16px)" : "none", borderBottom: isScrolled ? `1px solid ${t.navBorder}` : "none" }}>
           <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0.875rem 1.5rem", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <a href="/" style={{ textDecoration: "none" }}><LogoWordmark size={32} /></a>
+            <a href="/" style={{ textDecoration: "none" }}><GlitchLogo size={32} accent={t.accentGlow} color={t.text} /></a>
             <ul style={{ display: "flex", gap: "2rem", listStyle: "none" }}>
               {navLinks.map(l => (
                 <li key={l.href}>
@@ -232,7 +234,7 @@ export default function App() {
 
         {/* ── Mobile Nav ── */}
         <nav className="nav-mobile" style={{ position: "fixed", top: 2, left: 0, right: 0, zIndex: 50, alignItems: "center", justifyContent: "space-between", padding: "0.875rem 1.25rem", backgroundColor: t.bgNav, backdropFilter: "blur(16px)", borderBottom: `1px solid ${t.navBorder}` }}>
-          <a href="/" style={{ textDecoration: "none" }}><LogoWordmark size={28} /></a>
+          <a href="/" style={{ textDecoration: "none" }}><GlitchLogo size={28} accent={t.accentGlow} color={t.text} /></a>
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
             <ThemeToggle theme={theme} toggle={toggleTheme} t={t} />
             <button onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ background: "none", border: "none", color: t.text, cursor: "pointer", padding: "0.25rem" }} aria-label="Toggle menu">
@@ -261,9 +263,14 @@ export default function App() {
             <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", border: `1px solid ${t.borderAccent}`, borderRadius: "2rem", padding: "0.3rem 1rem", marginBottom: "2.5rem", fontSize: "0.7rem", fontFamily: "Space Grotesk, sans-serif", fontWeight: 600, letterSpacing: "0.15em", color: t.textMuted }}>
               <span style={dot}></span> DATA SCIENCE & ANALYTICS · GHANA
             </div>
-            <h1 style={{ ...heading, fontSize: "clamp(2.8rem,9vw,6.5rem)", lineHeight: 1.0, letterSpacing: "-0.03em", marginBottom: "1.5rem", color: t.text }}>
-              I BUILD WITH<br /><span style={{ color: t.accentGlow }}>DATA & CODE.</span>
-            </h1>
+            <HoverHeading
+              as="h1"
+              text="I BUILD WITH"
+              text2="DATA & CODE."
+              accent={t.accentGlow}
+              color={t.text}
+              style={{ ...heading, fontSize: "clamp(2.8rem,9vw,6.5rem)", lineHeight: 1.0, letterSpacing: "-0.03em", marginBottom: "1.5rem" }}
+            />
             <p style={{ ...muted, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.05em", fontSize: "clamp(0.8rem,2vw,1rem)", maxWidth: 560, margin: "0 auto 3rem" }}>
               Student. Developer. Builder. Exploring the intersection of data, software and intelligent systems.
             </p>
@@ -292,7 +299,7 @@ export default function App() {
             <div style={{ marginBottom: "3rem" }}>
               <div style={{ display: "flex", alignItems: "baseline", gap: "1rem" }}>
                 <span style={sectionNum}>01</span>
-                <h2 className="hover-text" style={sectionTitle}>Selected Work</h2>
+                <HoverHeading as="h2" text="Selected Work" accent={t.accentGlow} color={t.text} style={sectionTitle} />
               </div>
               <p style={{ ...muted, marginTop: "0.75rem", fontSize: "0.9375rem" }}>Projects across data analysis, software development and creative technology</p>
             </div>
@@ -328,7 +335,7 @@ export default function App() {
             <div style={{ marginBottom: "3rem" }}>
               <div style={{ display: "flex", alignItems: "baseline", gap: "1rem" }}>
                 <span style={sectionNum}>02</span>
-                <h2 className="hover-text" style={sectionTitle}>About Me</h2>
+                <HoverHeading as="h2" text="About Me" accent={t.accentGlow} color={t.text} style={sectionTitle} />
               </div>
             </div>
             <p style={{ ...muted, fontSize: "1.125rem", lineHeight: 1.85, maxWidth: 680, marginBottom: "1.5rem" }}>
@@ -354,7 +361,7 @@ export default function App() {
             <div style={{ marginBottom: "3rem" }}>
               <div style={{ display: "flex", alignItems: "baseline", gap: "1rem" }}>
                 <span style={sectionNum}>03</span>
-                <h2 className="hover-text" style={sectionTitle}>What I Do</h2>
+                <HoverHeading as="h2" text="What I Do" accent={t.accentGlow} color={t.text} style={sectionTitle} />
               </div>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: "1.25rem" }}>
@@ -385,7 +392,7 @@ export default function App() {
             <div style={{ marginBottom: "3rem" }}>
               <div style={{ display: "flex", alignItems: "baseline", gap: "1rem" }}>
                 <span style={sectionNum}>04</span>
-                <h2 className="hover-text" style={sectionTitle}>Tech Stack</h2>
+                <HoverHeading as="h2" text="Tech Stack" accent={t.accentGlow} color={t.text} style={sectionTitle} />
               </div>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(160px,1fr))", gap: "2.5rem" }}>
@@ -411,7 +418,7 @@ export default function App() {
             <div style={{ marginBottom: "3rem" }}>
               <div style={{ display: "flex", alignItems: "baseline", gap: "1rem" }}>
                 <span style={sectionNum}>05</span>
-                <h2 className="hover-text" style={sectionTitle}>Journey</h2>
+                <HoverHeading as="h2" text="Journey" accent={t.accentGlow} color={t.text} style={sectionTitle} />
               </div>
             </div>
             <div style={{ maxWidth: 580 }}>
@@ -436,7 +443,7 @@ export default function App() {
         <LitSection theme={theme}>
           <div style={section}>
             <div style={{ borderTop: `1px solid ${t.border}`, borderBottom: `1px solid ${t.border}`, padding: "4rem 0" }}>
-              <h2 className="hover-text" style={{ ...heading, fontSize: "clamp(2rem,5vw,3.5rem)", marginBottom: "1.25rem", color: t.text }}>CODE IS PART OF THE PROCESS.</h2>
+              <HoverHeading as="h2" text="CODE IS PART OF THE PROCESS." accent={t.accentGlow} color={t.text} style={{ ...heading, fontSize: "clamp(2rem,5vw,3.5rem)", marginBottom: "1.25rem" }} />
               <p style={{ ...muted, fontSize: "1.125rem", marginBottom: "2.5rem", maxWidth: 480, lineHeight: 1.75 }}>Explore the projects, experiments and systems I'm building.</p>
               <a href="https://github.com/bigg8t27-sudo" target="_blank" rel="noopener noreferrer" style={btnOutline} className="btn-glow">
                 <Link size={16} /> EXPLORE GITHUB <ArrowRight size={16} />
@@ -449,9 +456,7 @@ export default function App() {
         <LitSection id="contact" theme={theme}>
           <div style={section}>
             <div style={{ marginBottom: "4rem" }}>
-              <h2 className="hover-text" style={{ ...heading, fontSize: "clamp(2.5rem,7vw,5rem)", lineHeight: 1.0, marginBottom: "1.5rem", color: t.text }}>
-                HAVE AN IDEA?<br /><span style={{ color: t.accentGlow }}>LET'S BUILD SOMETHING.</span>
-              </h2>
+              <HoverHeading as="h2" text="HAVE AN IDEA?" text2="LET'S BUILD SOMETHING." accent={t.accentGlow} color={t.text} style={{ ...heading, fontSize: "clamp(2.5rem,7vw,5rem)", lineHeight: 1.0, marginBottom: "1.5rem" }} />
               <p style={{ ...muted, fontSize: "1.125rem", maxWidth: 580, lineHeight: 1.75 }}>Whether it's a software project, data problem, collaboration or an interesting idea, I'd love to hear from you.</p>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: "4rem" }}>
@@ -492,7 +497,7 @@ export default function App() {
           <div style={{ maxWidth: 1280, margin: "0 auto", padding: "4rem 1.5rem", background: t.bgFooter, backdropFilter: "blur(8px)" }}>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: "3rem", marginBottom: "3rem" }}>
               <div>
-                <div style={{ marginBottom: "1rem" }}><LogoWordmark size={30} /></div>
+                <div style={{ marginBottom: "1rem" }}><GlitchLogo size={30} accent={t.accentGlow} color={t.text} /></div>
                 <p style={{ ...muted, fontSize: "0.875rem", lineHeight: 1.8 }}>Data Science & Analytics<br />Software Development<br />Creative Technology</p>
               </div>
               <div>

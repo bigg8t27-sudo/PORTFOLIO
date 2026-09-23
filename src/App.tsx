@@ -4,6 +4,7 @@ import Lenis from "@studio-freight/lenis";
 import { Lightning } from "./Lightning";
 import { LogoWordmark } from "./Logo";
 import { PageTransition } from "./components/PageTransition";
+import { IntroScreen } from "./components/IntroScreen";
 
 const projects = [
   { id: 1, title: "Student Performance Analytics", description: "Data analysis system for tracking and visualizing student performance metrics.", technologies: ["Python", "Pandas", "SQL", "Statistics", "Data Visualization"], github: "https://github.com/bigg8t27-sudo", demo: "https://example.com" },
@@ -118,6 +119,7 @@ function ThemeToggle({ theme, toggle, t }: { theme: Theme; toggle: () => void; t
 
 // ── App ───────────────────────────────────────────────────────────────────────
 export default function App() {
+  const [introComplete, setIntroComplete] = useState(false);
   const [theme, setTheme] = useState<Theme>("dark");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -178,8 +180,11 @@ export default function App() {
 
   return (
     <div style={{ backgroundColor: t.bg, color: t.text, fontFamily: "Inter, sans-serif", transition: "background-color 0.3s, color 0.3s", minHeight: "100vh" }}>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+      {/* ── Intro boot screen — shows once before portfolio ── */}
+      {!introComplete && (
+        <IntroScreen accent="#00E5FF" onComplete={() => setIntroComplete(true)} />
+      )}
+      <style>{`        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
         html { scroll-behavior: smooth; }
         a { transition: color 0.2s; }

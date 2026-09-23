@@ -161,13 +161,8 @@ export function IntroScreen({ onComplete, accent = "#00E5FF" }: IntroScreenProps
   };
 
   useEffect(() => {
-    // Only show once per browser session
-    const alreadyShown = sessionStorage.getItem("__intro_shown");
-    if (alreadyShown) { onComplete(); return; }
-
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) {
-      sessionStorage.setItem("__intro_shown", "1");
       T(onComplete, 400);
       return;
     }
@@ -196,7 +191,6 @@ export function IntroScreen({ onComplete, accent = "#00E5FF" }: IntroScreenProps
             setExiting(true);
             const tl = gsap.timeline({
               onComplete: () => {
-                sessionStorage.setItem("__intro_shown", "1");
                 onComplete();
               },
             });
@@ -214,10 +208,7 @@ export function IntroScreen({ onComplete, accent = "#00E5FF" }: IntroScreenProps
     };
   }, []);
 
-  // If already shown, render nothing (onComplete called in effect)
-  if (typeof sessionStorage !== "undefined" && sessionStorage.getItem("__intro_shown")) {
-    return null;
-  }
+  // Always show intro on every page load
 
   const acc = accent;
 

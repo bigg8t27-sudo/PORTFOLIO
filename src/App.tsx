@@ -26,10 +26,10 @@ const timeline = [
   { year: "2024", title: "Programming", description: "Started building programming fundamentals and computer science concepts." },
 ];
 const contacts = [
-  { label: "EMAIL", text: "alfred@example.com", href: "mailto:alfred@example.com", isPhone: false },
-  { label: "PHONE", text: "0597 580 576", href: "tel:+233597580576", isPhone: true },
+  { label: "EMAIL", text: "bigg8t27@gmail.com", href: "mailto:bigg8t27@gmail.com", isPhone: false },
+  { label: "PHONE", text: "0538 592 437", href: "tel:+233538592437", isPhone: true },
   { label: "PHONE 2", text: "0598 942 192", href: "tel:+233598942192", isPhone: true },
-  { label: "LINKEDIN", text: "linkedin.com/in/alfredofori", href: "https://linkedin.com/in/alfredofori", isPhone: false },
+  { label: "LINKEDIN", text: "linkedin.com/in/alfred-ofori", href: "https://www.linkedin.com/in/alfred-ofori-4a4abb439/", isPhone: false },
   { label: "GITHUB", text: "github.com/bigg8t27-sudo", href: "https://github.com/bigg8t27-sudo", isPhone: false },
 ];
 
@@ -506,15 +506,15 @@ export default function App() {
               <div>
                 <h3 style={label}>CONTACT</h3>
                 <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                  <li style={{ color: t.textMuted, fontSize: "0.875rem" }}>0597 580 576</li>
+                  <li style={{ color: t.textMuted, fontSize: "0.875rem" }}>0538 592 437</li>
                   <li style={{ color: t.textMuted, fontSize: "0.875rem" }}>0598 942 192</li>
-                  <li style={{ color: t.textMuted, fontSize: "0.875rem" }}>alfred@example.com</li>
+                  <li style={{ color: t.textMuted, fontSize: "0.875rem" }}>bigg8t27@gmail.com</li>
                 </ul>
               </div>
               <div>
                 <h3 style={label}>SOCIAL</h3>
                 <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                  {[["GitHub","https://github.com/bigg8t27-sudo"],["LinkedIn","https://linkedin.com/in/alfredofori"]].map(([l,h]) => (
+                  {[["GitHub","https://github.com/bigg8t27-sudo"],["LinkedIn","https://www.linkedin.com/in/alfred-ofori-4a4abb439/"]].map(([l,h]) => (
                     <li key={l}><a href={h} target="_blank" rel="noopener noreferrer" className="hover-text" style={{ color: t.textMuted, textDecoration: "none", fontSize: "0.9375rem" }}>{l}</a></li>
                   ))}
                 </ul>

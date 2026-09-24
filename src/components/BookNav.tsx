@@ -119,9 +119,6 @@ export function BookNav({ navLinks, accent = "#00E5FF", onNavigate }: BookNavPro
 
           {/* Title — Senior Dev. */}
           <div style={{ marginBottom: "auto" }}>
-            <p style={{ fontSize: "0.52rem", letterSpacing: "0.22em", color: `${accent}70`, fontFamily: "Space Grotesk,sans-serif", fontWeight: 600, marginBottom: "0.4rem" }}>
-              ALFRED OFORI
-            </p>
             <p style={{ fontSize: "1.35rem", fontWeight: 700, fontFamily: "Space Grotesk,sans-serif", color: "#F0F0F0", letterSpacing: "0.04em", lineHeight: 1.15 }}>
               Senior<br />Dev.
             </p>
@@ -203,7 +200,7 @@ export function BookNav({ navLinks, accent = "#00E5FF", onNavigate }: BookNavPro
             whiteSpace: "nowrap",
             textShadow: `0 0 8px ${accent}80`,
           }}>
-            Senior Dev. — Alfred Ofori
+            Senior Dev. — Portfolio
           </span>
         </div>
 

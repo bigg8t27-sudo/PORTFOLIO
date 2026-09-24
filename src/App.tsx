@@ -208,6 +208,8 @@ export default function App() {
         ::selection { background: rgba(0,180,216,0.25); color: #fff; }
         .hero-grid { grid-template-columns: minmax(0,1fr) minmax(0,1fr); }
         @media(max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
+        .about-grid { grid-template-columns: minmax(0,2fr) minmax(0,3fr); }
+        @media(max-width: 768px) { .about-grid { grid-template-columns: 1fr; } }
       `}</style>
 
       <div className={theme === "dark" ? "dark-mode" : "light-mode"}>
@@ -269,10 +271,6 @@ export default function App() {
 
             {/* ── RIGHT: Hero content ── */}
             <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-              {/* Small label */}
-              <p style={{ fontSize: "0.65rem", letterSpacing: "0.22em", color: t.textMuted, fontFamily: "Space Grotesk, sans-serif", fontWeight: 600 }}>
-                ALFRED OFORI / DEVELOPER
-              </p>
 
               {/* Main headline */}
               <HoverHeading
@@ -356,25 +354,71 @@ export default function App() {
         {/* ══ ABOUT ══ */}
         <LitSection id="about" theme={theme}>
           <div style={section}>
+            {/* Section header */}
             <div style={{ marginBottom: "3rem" }}>
               <div style={{ display: "flex", alignItems: "baseline", gap: "1rem" }}>
                 <span style={sectionNum}>02</span>
                 <HoverHeading as="h2" text="About Me" accent={t.accentGlow} color={t.text} style={sectionTitle} />
               </div>
             </div>
-            <p style={{ ...muted, fontSize: "1.125rem", lineHeight: 1.85, maxWidth: 680, marginBottom: "1.5rem" }}>
-              I'm <span className="hover-text" style={{ color: t.accentGlow, fontFamily: "Space Grotesk, sans-serif", fontWeight: 600 }}>Alfred Ofori</span>, a Data Science & Analytics student and software developer from Ghana interested in building technology that solves practical problems.
-            </p>
-            <p style={{ ...muted, fontSize: "1.125rem", lineHeight: 1.85, maxWidth: 680, marginBottom: "3rem" }}>
-              I work across data, software and the web — turning ideas into useful digital products while continuously learning new technologies.
-            </p>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(130px,1fr))", gap: "2rem", padding: "2.5rem 0", borderTop: `1px solid ${t.border}`, borderBottom: `1px solid ${t.border}` }}>
-              {[{ label: "BASED IN", value: "GHANA" }, { label: "FIELD", value: "DATA SCIENCE" }, { label: "FOCUS", value: "DATA · CODE" }, { label: "STATUS", value: "ACTIVE", accent: true }].map(i => (
-                <div key={i.label}>
-                  <p style={{ fontSize: "0.65rem", color: t.textMuted, fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, letterSpacing: "0.15em", marginBottom: "0.4rem" }}>{i.label}</p>
-                  <p className="hover-text" style={{ ...heading, fontSize: "1.1rem", color: i.accent ? t.accentGlow : t.text }}>{i.value}</p>
+
+            {/* Two-column: Photo left, content right */}
+            <div style={{ display: "grid", gridTemplateColumns: "minmax(0,2fr) minmax(0,3fr)", gap: "4rem", alignItems: "start" }} className="about-grid">
+
+              {/* ── LEFT: Profile photo ── */}
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1.25rem" }}>
+                <div style={{
+                  position: "relative",
+                  width: "100%",
+                  maxWidth: 320,
+                  aspectRatio: "3/4",
+                  borderRadius: "0.75rem",
+                  overflow: "hidden",
+                  border: `1px solid ${t.borderAccent}`,
+                  boxShadow: theme === "dark"
+                    ? `0 0 40px rgba(0,229,255,0.08), 0 20px 60px rgba(0,0,0,0.5)`
+                    : `0 20px 60px rgba(0,0,0,0.12)`,
+                }}>
+                  {/* Corner brackets */}
+                  <span aria-hidden="true" style={{ position: "absolute", top: 10, left: 10, width: 16, height: 16, borderTop: `1.5px solid ${t.accentGlow}`, borderLeft: `1.5px solid ${t.accentGlow}`, zIndex: 2 }} />
+                  <span aria-hidden="true" style={{ position: "absolute", top: 10, right: 10, width: 16, height: 16, borderTop: `1.5px solid ${t.accentGlow}`, borderRight: `1.5px solid ${t.accentGlow}`, zIndex: 2 }} />
+                  <span aria-hidden="true" style={{ position: "absolute", bottom: 10, left: 10, width: 16, height: 16, borderBottom: `1.5px solid ${t.accentGlow}`, borderLeft: `1.5px solid ${t.accentGlow}`, zIndex: 2 }} />
+                  <span aria-hidden="true" style={{ position: "absolute", bottom: 10, right: 10, width: 16, height: 16, borderBottom: `1.5px solid ${t.accentGlow}`, borderRight: `1.5px solid ${t.accentGlow}`, zIndex: 2 }} />
+                  <img
+                    src="/images/alfred.jpg"
+                    alt="Alfred Ofori — Developer"
+                    style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top", display: "block" }}
+                  />
+                  {/* Bottom overlay tag */}
+                  <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "0.75rem 1rem", background: "linear-gradient(to top, rgba(0,0,0,0.75), transparent)", zIndex: 2 }}>
+                    <p style={{ fontFamily: "Space Grotesk,sans-serif", fontWeight: 700, fontSize: "0.7rem", letterSpacing: "0.12em", color: t.accentGlow }}>ALFRED OFORI</p>
+                    <p style={{ fontFamily: "Space Grotesk,sans-serif", fontSize: "0.55rem", letterSpacing: "0.1em", color: "rgba(255,255,255,0.6)", marginTop: "0.15rem" }}>DEVELOPER · GHANA</p>
+                  </div>
                 </div>
-              ))}
+              </div>
+
+              {/* ── RIGHT: Bio content ── */}
+              <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+                <p style={{ ...{ color: t.textMuted }, fontSize: "1.125rem", lineHeight: 1.85 }}>
+                  I'm <span className="hover-text" style={{ color: t.accentGlow, fontFamily: "Space Grotesk, sans-serif", fontWeight: 600 }}>Alfred Ofori</span>, a Data Science & Analytics student and software developer from Ghana interested in building technology that solves practical problems.
+                </p>
+                <p style={{ color: t.textMuted, fontSize: "1.125rem", lineHeight: 1.85 }}>
+                  I work across data, software and the web — turning ideas into useful digital products while continuously learning new technologies.
+                </p>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(120px,1fr))", gap: "1.5rem", padding: "2rem 0", borderTop: `1px solid ${t.border}`, borderBottom: `1px solid ${t.border}` }}>
+                  {[
+                    { label: "BASED IN", value: "GHANA" },
+                    { label: "FIELD", value: "DATA SCIENCE" },
+                    { label: "FOCUS", value: "DATA · CODE" },
+                    { label: "STATUS", value: "ACTIVE", accent: true },
+                  ].map(i => (
+                    <div key={i.label}>
+                      <p style={{ fontSize: "0.65rem", color: t.textMuted, fontFamily: "Space Grotesk, sans-serif", fontWeight: 700, letterSpacing: "0.15em", marginBottom: "0.4rem" }}>{i.label}</p>
+                      <p className="hover-text" style={{ ...heading, fontSize: "1rem", color: i.accent ? t.accentGlow : t.text }}>{i.value}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </LitSection>
@@ -521,7 +565,7 @@ export default function App() {
           <div style={{ maxWidth: 1280, margin: "0 auto", padding: "4rem 1.5rem", background: t.bgFooter, backdropFilter: "blur(8px)" }}>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: "3rem", marginBottom: "3rem" }}>
               <div>
-                <div style={{ marginBottom: "1rem" }}><GlitchLogo size={30} accent={t.accentGlow} color={t.text} /></div>
+                <div style={{ marginBottom: "1rem" }}><LettermarkLogo size={30} accent={t.accentGlow} /></div>
                 <p style={{ ...muted, fontSize: "0.875rem", lineHeight: 1.8 }}>Data Science & Analytics<br />Software Development<br />Creative Technology</p>
               </div>
               <div>

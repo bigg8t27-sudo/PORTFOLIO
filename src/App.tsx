@@ -385,7 +385,7 @@ export default function App() {
                   <span aria-hidden="true" style={{ position: "absolute", bottom: 10, left: 10, width: 16, height: 16, borderBottom: `1.5px solid ${t.accentGlow}`, borderLeft: `1.5px solid ${t.accentGlow}`, zIndex: 2 }} />
                   <span aria-hidden="true" style={{ position: "absolute", bottom: 10, right: 10, width: 16, height: 16, borderBottom: `1.5px solid ${t.accentGlow}`, borderRight: `1.5px solid ${t.accentGlow}`, zIndex: 2 }} />
                   <img
-                    src="/images/alfred.jpg"
+                    src="/images/alfred-profile.jpg"
                     alt="Alfred Ofori — Developer"
                     style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top", display: "block" }}
                   />

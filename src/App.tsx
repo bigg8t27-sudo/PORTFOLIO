@@ -1,12 +1,12 @@
 ﻿import { useEffect, useState, useCallback } from "react";
-import { Menu, X, ArrowDown, ArrowRight, ExternalLink, Mail, Link, Phone, Sun, Moon } from "lucide-react";
+import { ArrowRight, ExternalLink, Mail, Link, Phone, Sun, Moon, Menu, X } from "lucide-react";
 import Lenis from "@studio-freight/lenis";
 import { Lightning } from "./Lightning";
-import { LogoWordmark } from "./Logo";
 import { PageTransition } from "./components/PageTransition";
 import { IntroScreen } from "./components/IntroScreen";
-import { GlitchLogo } from "./components/GlitchLogo";
 import { HoverHeading } from "./components/HoverHeading";
+import { LettermarkLogo } from "./components/LettermarkLogo";
+import { BookNav } from "./components/BookNav";
 
 const projects = [
   { id: 1, title: "Student Performance Analytics", description: "Data analysis system for tracking and visualizing student performance metrics.", technologies: ["Python", "Pandas", "SQL", "Statistics", "Data Visualization"], github: "https://github.com/bigg8t27-sudo", demo: "https://example.com" },
@@ -206,35 +206,27 @@ export default function App() {
         .card-hover { transition: border-color 0.25s, box-shadow 0.25s; }
         .theme-btn:hover { opacity: 0.8; transform: scale(1.05); }
         ::selection { background: rgba(0,180,216,0.25); color: #fff; }
+        .hero-grid { grid-template-columns: minmax(0,1fr) minmax(0,1fr); }
+        @media(max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
       `}</style>
 
       <div className={theme === "dark" ? "dark-mode" : "light-mode"}>
         <PageTransition accent="#00E5FF" duration={1800} />
         <ScrollProgressBar pct={scrollPct} accent={t.accentGlow} />
 
-        {/* ── Desktop Nav ── */}
+        {/* ── Desktop Nav — minimal: logo + theme only ── */}
         <nav className="nav-desktop" style={{ position: "fixed", top: 2, left: 0, right: 0, zIndex: 50, transition: "all 0.3s", backgroundColor: isScrolled ? t.bgNav : "transparent", backdropFilter: isScrolled ? "blur(16px)" : "none", borderBottom: isScrolled ? `1px solid ${t.navBorder}` : "none" }}>
           <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0.875rem 1.5rem", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <a href="/" style={{ textDecoration: "none" }}><GlitchLogo size={32} accent={t.accentGlow} color={t.text} /></a>
-            <ul style={{ display: "flex", gap: "2rem", listStyle: "none" }}>
-              {navLinks.map(l => (
-                <li key={l.href}>
-                  <a href={l.href} className="hover-text" style={{ color: t.textMuted, textDecoration: "none", fontSize: "0.8rem", fontFamily: "Space Grotesk, sans-serif", fontWeight: 600, letterSpacing: "0.08em" }}>{l.label}</a>
-                </li>
-              ))}
-            </ul>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.75rem", color: t.textMuted, fontFamily: "Space Grotesk, sans-serif", fontWeight: 600, letterSpacing: "0.1em", border: `1px solid ${t.borderAccent}`, padding: "0.3rem 0.75rem", borderRadius: "2rem" }}>
-                <span style={dot}></span> AVAILABLE
-              </div>
-              <ThemeToggle theme={theme} toggle={toggleTheme} t={t} />
-            </div>
+            <a href="/" style={{ textDecoration: "none" }} aria-label="Home">
+              <LettermarkLogo size={36} accent={t.accentGlow} />
+            </a>
+            <ThemeToggle theme={theme} toggle={toggleTheme} t={t} />
           </div>
         </nav>
 
         {/* ── Mobile Nav ── */}
         <nav className="nav-mobile" style={{ position: "fixed", top: 2, left: 0, right: 0, zIndex: 50, alignItems: "center", justifyContent: "space-between", padding: "0.875rem 1.25rem", backgroundColor: t.bgNav, backdropFilter: "blur(16px)", borderBottom: `1px solid ${t.navBorder}` }}>
-          <a href="/" style={{ textDecoration: "none" }}><GlitchLogo size={28} accent={t.accentGlow} color={t.text} /></a>
+          <a href="/" style={{ textDecoration: "none" }} aria-label="Home"><LettermarkLogo size={32} accent={t.accentGlow} /></a>
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
             <ThemeToggle theme={theme} toggle={toggleTheme} t={t} />
             <button onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ background: "none", border: "none", color: t.text, cursor: "pointer", padding: "0.25rem" }} aria-label="Toggle menu">
@@ -257,38 +249,70 @@ export default function App() {
         )}
 
         {/* ══ HERO ══ */}
-        <section id="hero" style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "6rem 1.5rem 3rem", textAlign: "center", position: "relative", overflow: "hidden", backgroundColor: t.bg }}>
-          <div aria-hidden="true" style={{ position: "absolute", inset: 0, zIndex: 0, backgroundImage: `linear-gradient(${t.gridColor} 1px, transparent 1px), linear-gradient(90deg, ${t.gridColor} 1px, transparent 1px)`, backgroundSize: "60px 60px", maskImage: "radial-gradient(ellipse at center, black 30%, transparent 80%)", WebkitMaskImage: "radial-gradient(ellipse at center, black 30%, transparent 80%)" }} />
-          <div style={{ position: "relative", zIndex: 1, maxWidth: 900, width: "100%" }}>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", border: `1px solid ${t.borderAccent}`, borderRadius: "2rem", padding: "0.3rem 1rem", marginBottom: "2.5rem", fontSize: "0.7rem", fontFamily: "Space Grotesk, sans-serif", fontWeight: 600, letterSpacing: "0.15em", color: t.textMuted }}>
-              <span style={dot}></span> DATA SCIENCE & ANALYTICS · GHANA
+        {/* ══ HERO — two-column: Book (left) + Content (right) ══ */}
+        <section id="hero" style={{ minHeight: "100vh", display: "flex", alignItems: "center", position: "relative", overflow: "hidden", backgroundColor: t.bg }}>
+          {/* Subtle background grid */}
+          <div aria-hidden="true" style={{ position: "absolute", inset: 0, zIndex: 0, backgroundImage: `linear-gradient(${t.gridColor} 1px, transparent 1px), linear-gradient(90deg, ${t.gridColor} 1px, transparent 1px)`, backgroundSize: "64px 64px", maskImage: "radial-gradient(ellipse at 30% 50%, black 20%, transparent 75%)", WebkitMaskImage: "radial-gradient(ellipse at 30% 50%, black 20%, transparent 75%)" }} />
+
+          <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 1280, margin: "0 auto", padding: "6rem 2rem 3rem", display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)", gap: "3rem", alignItems: "center" }} className="hero-grid">
+            {/* ── LEFT: 3D Book ── */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <BookNav
+                navLinks={navLinks}
+                accent={t.accentGlow}
+                onNavigate={(href) => {
+                  const id = href.replace("#","");
+                  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+                }}
+              />
             </div>
-            <HoverHeading
-              as="h1"
-              text="I BUILD WITH"
-              text2="DATA & CODE."
-              accent={t.accentGlow}
-              color={t.text}
-              style={{ ...heading, fontSize: "clamp(2.8rem,9vw,6.5rem)", lineHeight: 1.0, letterSpacing: "-0.03em", marginBottom: "1.5rem" }}
-            />
-            <p style={{ ...muted, fontFamily: "Space Grotesk, sans-serif", letterSpacing: "0.05em", fontSize: "clamp(0.8rem,2vw,1rem)", maxWidth: 560, margin: "0 auto 3rem" }}>
-              Student. Developer. Builder. Exploring the intersection of data, software and intelligent systems.
-            </p>
-            <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap", marginBottom: "3.5rem" }}>
-              <a href="#work" style={btn} className="btn-glow">VIEW MY WORK <ArrowRight size={16} /></a>
-              <a href="#contact" style={btnOutline} className="btn-glow">LET'S TALK <ArrowRight size={16} /></a>
-            </div>
-            <div style={{ display: "flex", gap: "3rem", justifyContent: "center", flexWrap: "wrap", marginBottom: "4rem", paddingTop: "2rem", borderTop: `1px solid ${t.statBorder}` }}>
-              {[{ num: "5+", label: "Projects Built" }, { num: "4+", label: "Technologies" }, { num: "2026", label: "Current Year" }].map(stat => (
-                <div key={stat.label} style={{ textAlign: "center" }}>
-                  <p style={{ ...heading, fontSize: "1.75rem", color: t.accentGlow, lineHeight: 1 }}>{stat.num}</p>
-                  <p style={{ ...muted, fontSize: "0.75rem", letterSpacing: "0.08em", marginTop: "0.3rem" }}>{stat.label}</p>
-                </div>
-              ))}
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", color: t.textMuted }}>
-              <span style={{ fontSize: "0.65rem", letterSpacing: "0.2em" }}>SCROLL TO EXPLORE</span>
-              <ArrowDown size={14} />
+
+            {/* ── RIGHT: Hero content ── */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+              {/* Small label */}
+              <p style={{ fontSize: "0.65rem", letterSpacing: "0.22em", color: t.textMuted, fontFamily: "Space Grotesk, sans-serif", fontWeight: 600 }}>
+                ALFRED OFORI / DEVELOPER
+              </p>
+
+              {/* Main headline */}
+              <HoverHeading
+                as="h1"
+                text="Building digital"
+                text2="experiences."
+                accent={t.accentGlow}
+                color={t.text}
+                style={{ ...heading, fontSize: "clamp(2.4rem,5.5vw,4.2rem)", lineHeight: 1.05, letterSpacing: "-0.03em" }}
+              />
+
+              {/* Sub-headline */}
+              <p style={{ fontSize: "clamp(1rem,1.8vw,1.2rem)", fontWeight: 600, fontFamily: "Space Grotesk,sans-serif", color: t.accentGlow, letterSpacing: "-0.01em" }}>
+                with data, code & intelligence.
+              </p>
+
+              {/* Description */}
+              <p style={{ ...{ color: t.textMuted }, fontSize: "clamp(0.875rem,1.5vw,1rem)", lineHeight: 1.8, maxWidth: 480 }}>
+                I design and build software systems across data science, artificial intelligence and modern web technologies — turning complex problems into useful digital products.
+              </p>
+
+              {/* Stats row */}
+              <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap", paddingTop: "0.5rem", borderTop: `1px solid ${t.border}` }}>
+                {[{ num: "5+", label: "Projects" }, { num: "4+", label: "Technologies" }, { num: "2026", label: "Year" }].map(s => (
+                  <div key={s.label}>
+                    <p style={{ ...heading, fontSize: "1.5rem", color: t.accentGlow, lineHeight: 1 }}>{s.num}</p>
+                    <p style={{ color: t.textMuted, fontSize: "0.7rem", letterSpacing: "0.08em", marginTop: "0.2rem" }}>{s.label}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* CTAs */}
+              <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", paddingTop: "0.5rem" }}>
+                <a href="#work" style={btn} className="btn-glow" onClick={(e)=>{e.preventDefault();document.getElementById("work")?.scrollIntoView({behavior:"smooth"})}}>
+                  VIEW MY WORK <ArrowRight size={15} />
+                </a>
+                <a href="#contact" style={btnOutline} className="btn-glow" onClick={(e)=>{e.preventDefault();document.getElementById("contact")?.scrollIntoView({behavior:"smooth"})}}>
+                  LET'S TALK
+                </a>
+              </div>
             </div>
           </div>
         </section>

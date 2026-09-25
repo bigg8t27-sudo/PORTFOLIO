@@ -206,16 +206,17 @@ export default function App() {
         .card-hover { transition: border-color 0.25s, box-shadow 0.25s; }
         .theme-btn:hover { opacity: 0.8; transform: scale(1.05); }
         ::selection { background: rgba(0,180,216,0.25); color: #fff; }
-        /* ── Hero grid — always two columns ── */
+
+        /* ── Hero grid ── */
         .hero-grid {
           display: grid;
-          grid-template-columns: 45% 55%;
-          gap: 0;
+          grid-template-columns: 48% 52%;
           align-items: center;
           min-height: 100vh;
-          padding: 5rem 0 2rem;
           width: 100%;
           box-sizing: border-box;
+          padding: 5rem 1.5rem 2rem;
+          gap: 1.5rem;
         }
         /* ── About grid ── */
         .about-grid {
@@ -226,46 +227,52 @@ export default function App() {
         }
         /* ── Prevent mid-word breaks ── */
         h1, h2, h3, p, a, span { word-break: normal; overflow-wrap: normal; hyphens: none; white-space: normal; }
-        /* ── MOBILE: fill screen, book hard left, text readable ── */
+
+        /* ── MOBILE (≤768px): same layout, bigger text, bigger book ── */
         @media(max-width: 768px) {
           .hero-grid {
-            grid-template-columns: 42% 58%;
-            padding: 5rem 0 1.5rem !important;
-            gap: 0 !important;
+            grid-template-columns: 50% 50%;
+            padding: 5.5rem 0.5rem 2rem;
+            gap: 0.5rem;
             min-height: 100vh;
           }
           .hero-book {
             justify-content: flex-start !important;
-            align-items: center;
             padding-left: 0 !important;
           }
           .book-shrink {
-            transform: scale(0.58);
+            transform: scale(0.82);
             transform-origin: left center;
           }
           .hero-content {
-            padding-right: 1rem;
-            gap: 0.8rem !important;
+            padding-right: 0.75rem;
+            gap: 1rem !important;
           }
-          .hero-h1 { font-size: 1.6rem !important; }
-          .hero-sub { font-size: 0.82rem !important; }
-          .hero-desc { font-size: 0.78rem !important; line-height: 1.65 !important; }
-          .hero-stat-num { font-size: 1.1rem !important; }
-          .hero-stat-label { font-size: 0.6rem !important; }
-          .hero-btn { font-size: 0.68rem !important; padding: 0.5rem 0.8rem !important; }
+          .hero-h1   { font-size: 1.75rem !important; line-height: 1.1 !important; }
+          .hero-sub  { font-size: 0.95rem !important; }
+          .hero-desc { font-size: 0.88rem !important; line-height: 1.7 !important; }
+          .hero-stat-num   { font-size: 1.35rem !important; }
+          .hero-stat-label { font-size: 0.65rem !important; }
+          .hero-btn  { font-size: 0.75rem !important; padding: 0.55rem 1rem !important; }
           .about-grid { grid-template-columns: 1fr 1.4fr; gap: 1.25rem; }
         }
+
+        /* ── SMALL MOBILE (≤480px) ── */
         @media(max-width: 480px) {
           .hero-grid {
-            grid-template-columns: 40% 60%;
+            grid-template-columns: 48% 52%;
+            padding: 5rem 0.25rem 1.5rem;
+            gap: 0.25rem;
           }
           .book-shrink {
-            transform: scale(0.48);
+            transform: scale(0.7);
             transform-origin: left center;
           }
-          .hero-h1 { font-size: 1.4rem !important; }
-          .hero-sub { font-size: 0.76rem !important; }
-          .hero-desc { font-size: 0.72rem !important; }
+          .hero-h1   { font-size: 1.45rem !important; }
+          .hero-sub  { font-size: 0.82rem !important; }
+          .hero-desc { font-size: 0.76rem !important; }
+          .hero-stat-num   { font-size: 1.1rem !important; }
+          .hero-btn  { font-size: 0.68rem !important; padding: 0.5rem 0.75rem !important; }
           .about-grid { grid-template-columns: 1fr 1.5fr; gap: 1rem; }
         }
       `}</style>
@@ -340,16 +347,16 @@ export default function App() {
                 accent={t.accentGlow}
                 color={t.text}
                 className="hero-h1"
-                style={{ ...heading, fontSize: "clamp(1.6rem, 3.4vw, 4.2rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }}
+                style={{ ...heading, fontSize: "clamp(1.75rem, 4vw, 4.8rem)", lineHeight: 1.05, letterSpacing: "-0.02em" }}
               />
 
               {/* Sub-headline */}
-              <p className="hero-sub" style={{ fontSize: "clamp(0.82rem, 1.4vw, 1.2rem)", fontWeight: 600, fontFamily: "Space Grotesk,sans-serif", color: t.accentGlow, letterSpacing: "-0.01em" }}>
+              <p className="hero-sub" style={{ fontSize: "clamp(0.95rem, 1.6vw, 1.35rem)", fontWeight: 600, fontFamily: "Space Grotesk,sans-serif", color: t.accentGlow, letterSpacing: "-0.01em" }}>
                 with data, code & intelligence.
               </p>
 
               {/* Description */}
-              <p className="hero-desc" style={{ color: t.textMuted, fontSize: "clamp(0.78rem, 1.1vw, 1rem)", lineHeight: 1.8 }}>
+              <p className="hero-desc" style={{ color: t.textMuted, fontSize: "clamp(0.88rem, 1.2vw, 1.05rem)", lineHeight: 1.8 }}>
                 I design and build software systems across data science, AI and modern web technologies.
               </p>
 
@@ -357,23 +364,23 @@ export default function App() {
               <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", paddingTop: "0.75rem", borderTop: `1px solid ${t.border}` }}>
                 {[{ num: "5+", label: "Projects" }, { num: "4+", label: "Tech" }, { num: "2026", label: "Year" }].map(s => (
                   <div key={s.label}>
-                    <p className="hero-stat-num" style={{ ...heading, fontSize: "clamp(1.1rem, 1.8vw, 1.5rem)", color: t.accentGlow, lineHeight: 1 }}>{s.num}</p>
-                    <p className="hero-stat-label" style={{ color: t.textMuted, fontSize: "clamp(0.6rem, 0.8vw, 0.7rem)", letterSpacing: "0.06em", marginTop: "0.2rem" }}>{s.label}</p>
+                    <p className="hero-stat-num" style={{ ...heading, fontSize: "clamp(1.35rem, 2vw, 1.75rem)", color: t.accentGlow, lineHeight: 1 }}>{s.num}</p>
+                    <p className="hero-stat-label" style={{ color: t.textMuted, fontSize: "clamp(0.65rem, 0.85vw, 0.75rem)", letterSpacing: "0.06em", marginTop: "0.2rem" }}>{s.label}</p>
                   </div>
                 ))}
               </div>
 
               {/* CTAs */}
-              <div style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap" }}>
+              <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
                 <a href="#work"
                   className="hero-btn btn-glow"
-                  style={{ ...btn, fontSize: "clamp(0.68rem, 1vw, 0.875rem)", padding: "0.6rem 1.2rem", gap: "0.3rem" }}
+                  style={{ ...btn, fontSize: "clamp(0.75rem, 1vw, 0.9rem)", padding: "0.7rem 1.5rem", gap: "0.4rem" }}
                   onClick={(e) => { e.preventDefault(); document.getElementById("work")?.scrollIntoView({ behavior: "smooth" }); }}>
-                  VIEW MY WORK <ArrowRight size={13} />
+                  VIEW MY WORK <ArrowRight size={14} />
                 </a>
                 <a href="#contact"
                   className="hero-btn btn-glow"
-                  style={{ ...btnOutline, fontSize: "clamp(0.68rem, 1vw, 0.875rem)", padding: "0.6rem 1.2rem" }}
+                  style={{ ...btnOutline, fontSize: "clamp(0.75rem, 1vw, 0.9rem)", padding: "0.7rem 1.5rem" }}
                   onClick={(e) => { e.preventDefault(); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}>
                   LET'S TALK
                 </a>

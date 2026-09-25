@@ -55,9 +55,9 @@ export function BookNav({ navLinks, accent = "#00E5FF", onNavigate }: BookNavPro
   }, [reduced]);
 
   // Book dimensions
-  const W  = 200;  // cover width
-  const H  = 280;  // cover height
-  const D  = 36;   // spine/thickness
+  const W  = 240;  // cover width
+  const H  = 340;  // cover height
+  const D  = 44;   // spine/thickness
 
   const coverBg    = "linear-gradient(145deg,#0c1828 0%,#0a1520 55%,#060e18 100%)";
   const spineBg    = "linear-gradient(180deg,#152238 0%,#0a1824 50%,#060e18 100%)";
@@ -119,7 +119,7 @@ export function BookNav({ navLinks, accent = "#00E5FF", onNavigate }: BookNavPro
 
           {/* Title — Senior Dev. */}
           <div style={{ marginBottom: "auto" }}>
-            <p style={{ fontSize: "1.35rem", fontWeight: 700, fontFamily: "Space Grotesk,sans-serif", color: "#F0F0F0", letterSpacing: "0.04em", lineHeight: 1.15 }}>
+            <p style={{ fontSize: "1.6rem", fontWeight: 700, fontFamily: "Space Grotesk,sans-serif", color: "#F0F0F0", letterSpacing: "0.04em", lineHeight: 1.15 }}>
               Senior<br />Dev.
             </p>
           </div>
@@ -144,7 +144,7 @@ export function BookNav({ navLinks, accent = "#00E5FF", onNavigate }: BookNavPro
                       textDecoration: "none",
                       fontFamily: "Space Grotesk,sans-serif",
                       fontWeight: 700,
-                      fontSize: "0.72rem",
+                      fontSize: "0.85rem",
                       letterSpacing: hoveredLink === link.href ? "0.22em" : "0.14em",
                       color: hoveredLink === link.href ? accent : "rgba(240,240,240,0.75)",
                       transition: "color 0.2s,letter-spacing 0.25s",

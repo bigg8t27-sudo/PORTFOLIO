@@ -206,14 +206,18 @@ export default function App() {
         .card-hover { transition: border-color 0.25s, box-shadow 0.25s; }
         .theme-btn:hover { opacity: 0.8; transform: scale(1.05); }
         ::selection { background: rgba(0,180,216,0.25); color: #fff; }
-        /* ── Hero: always two columns, scale on mobile ── */
+        /* ── Hero grid — always two columns ── */
         .hero-grid {
           display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 1.5rem;
+          grid-template-columns: 45% 55%;
+          gap: 0;
           align-items: center;
+          min-height: 100vh;
+          padding: 5rem 0 2rem;
+          width: 100%;
+          box-sizing: border-box;
         }
-        /* ── About: two columns on all sizes ── */
+        /* ── About grid ── */
         .about-grid {
           display: grid;
           grid-template-columns: minmax(0,2fr) minmax(0,3fr);
@@ -222,17 +226,47 @@ export default function App() {
         }
         /* ── Prevent mid-word breaks ── */
         h1, h2, h3, p, a, span { word-break: normal; overflow-wrap: normal; hyphens: none; white-space: normal; }
-        /* ── Mobile tweaks — keep side-by-side but shrink book ── */
+        /* ── MOBILE: fill screen, book hard left, text readable ── */
         @media(max-width: 768px) {
-          .hero-grid { gap: 0.75rem; padding: 5rem 1rem 2rem !important; }
-          .about-grid { grid-template-columns: 1fr 1.5fr; gap: 1.25rem; }
-          .book-shrink { transform: scale(0.62); transform-origin: center center; }
-          .hero-text-col { gap: 0.75rem !important; }
+          .hero-grid {
+            grid-template-columns: 42% 58%;
+            padding: 5rem 0 1.5rem !important;
+            gap: 0 !important;
+            min-height: 100vh;
+          }
+          .hero-book {
+            justify-content: flex-start !important;
+            align-items: center;
+            padding-left: 0 !important;
+          }
+          .book-shrink {
+            transform: scale(0.58);
+            transform-origin: left center;
+          }
+          .hero-content {
+            padding-right: 1rem;
+            gap: 0.8rem !important;
+          }
+          .hero-h1 { font-size: 1.6rem !important; }
+          .hero-sub { font-size: 0.82rem !important; }
+          .hero-desc { font-size: 0.78rem !important; line-height: 1.65 !important; }
+          .hero-stat-num { font-size: 1.1rem !important; }
+          .hero-stat-label { font-size: 0.6rem !important; }
+          .hero-btn { font-size: 0.68rem !important; padding: 0.5rem 0.8rem !important; }
+          .about-grid { grid-template-columns: 1fr 1.4fr; gap: 1.25rem; }
         }
         @media(max-width: 480px) {
-          .hero-grid { gap: 0.5rem; padding: 4.5rem 0.75rem 1.5rem !important; }
-          .about-grid { grid-template-columns: 1fr 1.6fr; gap: 1rem; }
-          .book-shrink { transform: scale(0.52); transform-origin: center center; }
+          .hero-grid {
+            grid-template-columns: 40% 60%;
+          }
+          .book-shrink {
+            transform: scale(0.48);
+            transform-origin: left center;
+          }
+          .hero-h1 { font-size: 1.4rem !important; }
+          .hero-sub { font-size: 0.76rem !important; }
+          .hero-desc { font-size: 0.72rem !important; }
+          .about-grid { grid-template-columns: 1fr 1.5fr; gap: 1rem; }
         }
       `}</style>
 
@@ -280,9 +314,9 @@ export default function App() {
           {/* Subtle background grid */}
           <div aria-hidden="true" style={{ position: "absolute", inset: 0, zIndex: 0, backgroundImage: `linear-gradient(${t.gridColor} 1px, transparent 1px), linear-gradient(90deg, ${t.gridColor} 1px, transparent 1px)`, backgroundSize: "64px 64px", maskImage: "radial-gradient(ellipse at 30% 50%, black 20%, transparent 75%)", WebkitMaskImage: "radial-gradient(ellipse at 30% 50%, black 20%, transparent 75%)" }} />
 
-          <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 1280, margin: "0 auto", padding: "6rem 2rem 3rem", display: "grid", gap: "3rem", alignItems: "center" }} className="hero-grid">
-            {/* ── LEFT: 3D Book ── */}
-            <div className="hero-book" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 1280, margin: "0 auto" }} className="hero-grid">
+            {/* ── LEFT: 3D Book — pushed to left edge ── */}
+            <div className="hero-book" style={{ display: "flex", alignItems: "center", justifyContent: "center", paddingLeft: "2rem" }}>
               <div className="book-shrink">
                 <BookNav
                   navLinks={navLinks}
@@ -296,49 +330,50 @@ export default function App() {
             </div>
 
             {/* ── RIGHT: Hero content ── */}
-            <div className="hero-content" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+            <div className="hero-content" style={{ display: "flex", flexDirection: "column", gap: "1.4rem", paddingRight: "2.5rem" }}>
 
-              {/* Main headline — scales with vw so it always fits the column */}
+              {/* Main headline */}
               <HoverHeading
                 as="h1"
                 text="Building digital"
                 text2="experiences."
                 accent={t.accentGlow}
                 color={t.text}
-                style={{ ...heading, fontSize: "clamp(1.1rem, 3.6vw, 4.2rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }}
+                className="hero-h1"
+                style={{ ...heading, fontSize: "clamp(1.6rem, 3.4vw, 4.2rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }}
               />
 
               {/* Sub-headline */}
-              <p style={{ fontSize: "clamp(0.65rem, 1.5vw, 1.2rem)", fontWeight: 600, fontFamily: "Space Grotesk,sans-serif", color: t.accentGlow, letterSpacing: "-0.01em" }}>
+              <p className="hero-sub" style={{ fontSize: "clamp(0.82rem, 1.4vw, 1.2rem)", fontWeight: 600, fontFamily: "Space Grotesk,sans-serif", color: t.accentGlow, letterSpacing: "-0.01em" }}>
                 with data, code & intelligence.
               </p>
 
               {/* Description */}
-              <p style={{ color: t.textMuted, fontSize: "clamp(0.6rem, 1.2vw, 1rem)", lineHeight: 1.75 }}>
+              <p className="hero-desc" style={{ color: t.textMuted, fontSize: "clamp(0.78rem, 1.1vw, 1rem)", lineHeight: 1.8 }}>
                 I design and build software systems across data science, AI and modern web technologies.
               </p>
 
               {/* Stats row */}
-              <div className="stats-row" style={{ display: "flex", gap: "clamp(0.5rem,1.5vw,2rem)", flexWrap: "wrap", paddingTop: "0.5rem", borderTop: `1px solid ${t.border}` }}>
+              <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", paddingTop: "0.75rem", borderTop: `1px solid ${t.border}` }}>
                 {[{ num: "5+", label: "Projects" }, { num: "4+", label: "Tech" }, { num: "2026", label: "Year" }].map(s => (
                   <div key={s.label}>
-                    <p style={{ ...heading, fontSize: "clamp(0.85rem, 2vw, 1.5rem)", color: t.accentGlow, lineHeight: 1 }}>{s.num}</p>
-                    <p style={{ color: t.textMuted, fontSize: "clamp(0.45rem, 0.9vw, 0.7rem)", letterSpacing: "0.06em", marginTop: "0.15rem" }}>{s.label}</p>
+                    <p className="hero-stat-num" style={{ ...heading, fontSize: "clamp(1.1rem, 1.8vw, 1.5rem)", color: t.accentGlow, lineHeight: 1 }}>{s.num}</p>
+                    <p className="hero-stat-label" style={{ color: t.textMuted, fontSize: "clamp(0.6rem, 0.8vw, 0.7rem)", letterSpacing: "0.06em", marginTop: "0.2rem" }}>{s.label}</p>
                   </div>
                 ))}
               </div>
 
               {/* CTAs */}
-              <div className="cta-row" style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+              <div style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap" }}>
                 <a href="#work"
-                  style={{ ...btn, fontSize: "clamp(0.5rem, 1.1vw, 0.875rem)", padding: "clamp(0.4rem,0.8vw,0.75rem) clamp(0.6rem,1.4vw,1.5rem)", gap: "0.3rem" }}
-                  className="btn-glow"
+                  className="hero-btn btn-glow"
+                  style={{ ...btn, fontSize: "clamp(0.68rem, 1vw, 0.875rem)", padding: "0.6rem 1.2rem", gap: "0.3rem" }}
                   onClick={(e) => { e.preventDefault(); document.getElementById("work")?.scrollIntoView({ behavior: "smooth" }); }}>
-                  VIEW MY WORK <ArrowRight size={11} />
+                  VIEW MY WORK <ArrowRight size={13} />
                 </a>
                 <a href="#contact"
-                  style={{ ...btnOutline, fontSize: "clamp(0.5rem, 1.1vw, 0.875rem)", padding: "clamp(0.4rem,0.8vw,0.75rem) clamp(0.6rem,1.4vw,1.5rem)" }}
-                  className="btn-glow"
+                  className="hero-btn btn-glow"
+                  style={{ ...btnOutline, fontSize: "clamp(0.68rem, 1vw, 0.875rem)", padding: "0.6rem 1.2rem" }}
                   onClick={(e) => { e.preventDefault(); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}>
                   LET'S TALK
                 </a>

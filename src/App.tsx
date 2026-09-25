@@ -231,9 +231,9 @@ export default function App() {
         /* ── MOBILE (≤768px): same layout, bigger text, bigger book ── */
         @media(max-width: 768px) {
           .hero-grid {
-            grid-template-columns: 50% 50%;
-            padding: 5.5rem 0.5rem 2rem;
-            gap: 0.5rem;
+            grid-template-columns: 44% 56%;
+            padding: 5.5rem 0.75rem 2rem;
+            gap: 0.25rem;
             min-height: 100vh;
           }
           .hero-book {
@@ -241,35 +241,40 @@ export default function App() {
             padding-left: 0 !important;
           }
           .book-shrink {
-            transform: scale(0.82);
+            transform: scale(0.78);
             transform-origin: left center;
           }
           .hero-content {
+            padding-left: 0.75rem;
             padding-right: 0.75rem;
             gap: 1rem !important;
           }
-          .hero-h1   { font-size: 1.75rem !important; line-height: 1.1 !important; }
-          .hero-sub  { font-size: 0.95rem !important; }
-          .hero-desc { font-size: 0.88rem !important; line-height: 1.7 !important; }
-          .hero-stat-num   { font-size: 1.35rem !important; }
-          .hero-stat-label { font-size: 0.65rem !important; }
-          .hero-btn  { font-size: 0.75rem !important; padding: 0.55rem 1rem !important; }
+          .hero-h1   { font-size: 1.95rem !important; line-height: 1.08 !important; }
+          .hero-sub  { font-size: 1.05rem !important; }
+          .hero-desc { font-size: 0.95rem !important; line-height: 1.72 !important; }
+          .hero-stat-num   { font-size: 1.45rem !important; }
+          .hero-stat-label { font-size: 0.7rem !important; }
+          .hero-btn  { font-size: 0.8rem !important; padding: 0.6rem 1.1rem !important; }
           .about-grid { grid-template-columns: 1fr 1.4fr; gap: 1.25rem; }
         }
 
         /* ── SMALL MOBILE (≤480px) ── */
         @media(max-width: 480px) {
           .hero-grid {
-            grid-template-columns: 48% 52%;
-            padding: 5rem 0.25rem 1.5rem;
+            grid-template-columns: 42% 58%;
+            padding: 5rem 0.5rem 1.5rem;
             gap: 0.25rem;
           }
           .book-shrink {
-            transform: scale(0.7);
+            transform: scale(0.65);
             transform-origin: left center;
           }
-          .hero-h1   { font-size: 1.45rem !important; }
-          .hero-sub  { font-size: 0.82rem !important; }
+          .hero-content {
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+          }
+          .hero-h1   { font-size: 1.65rem !important; }
+          .hero-sub  { font-size: 0.9rem !important; }
           .hero-desc { font-size: 0.76rem !important; }
           .hero-stat-num   { font-size: 1.1rem !important; }
           .hero-btn  { font-size: 0.68rem !important; padding: 0.5rem 0.75rem !important; }

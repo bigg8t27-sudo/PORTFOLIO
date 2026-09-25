@@ -206,20 +206,33 @@ export default function App() {
         .card-hover { transition: border-color 0.25s, box-shadow 0.25s; }
         .theme-btn:hover { opacity: 0.8; transform: scale(1.05); }
         ::selection { background: rgba(0,180,216,0.25); color: #fff; }
-        .hero-grid { grid-template-columns: minmax(0,1fr) minmax(0,1fr); }
-        @media(max-width: 900px) { .hero-grid { grid-template-columns: 1fr !important; } }
-        .about-grid { grid-template-columns: minmax(0,2fr) minmax(0,3fr); }
-        @media(max-width: 768px) { .about-grid { grid-template-columns: 1fr !important; } }
-        /* Prevent mid-word breaks everywhere */
-        * { word-break: normal; overflow-wrap: break-word; hyphens: none; }
-        h1, h2, h3, p { word-break: keep-all; white-space: normal; }
-        /* Mobile hero fixes */
-        @media(max-width: 900px) {
-          .hero-content h1 span { display: inline !important; }
-          .hero-book { order: 2 !important; }
-          .hero-content { order: 1 !important; text-align: center; align-items: center !important; }
-          .hero-content .stats-row { justify-content: center; }
-          .hero-content .cta-row { justify-content: center; }
+        /* ── Hero: always two columns, scale on mobile ── */
+        .hero-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1.5rem;
+          align-items: center;
+        }
+        /* ── About: two columns on all sizes ── */
+        .about-grid {
+          display: grid;
+          grid-template-columns: minmax(0,2fr) minmax(0,3fr);
+          gap: 3rem;
+          align-items: start;
+        }
+        /* ── Prevent mid-word breaks ── */
+        h1, h2, h3, p, a, span { word-break: normal; overflow-wrap: normal; hyphens: none; white-space: normal; }
+        /* ── Mobile tweaks — keep side-by-side but shrink book ── */
+        @media(max-width: 768px) {
+          .hero-grid { gap: 0.75rem; padding: 5rem 1rem 2rem !important; }
+          .about-grid { grid-template-columns: 1fr 1.5fr; gap: 1.25rem; }
+          .book-shrink { transform: scale(0.62); transform-origin: center center; }
+          .hero-text-col { gap: 0.75rem !important; }
+        }
+        @media(max-width: 480px) {
+          .hero-grid { gap: 0.5rem; padding: 4.5rem 0.75rem 1.5rem !important; }
+          .about-grid { grid-template-columns: 1fr 1.6fr; gap: 1rem; }
+          .book-shrink { transform: scale(0.52); transform-origin: center center; }
         }
       `}</style>
 
@@ -270,55 +283,63 @@ export default function App() {
           <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 1280, margin: "0 auto", padding: "6rem 2rem 3rem", display: "grid", gap: "3rem", alignItems: "center" }} className="hero-grid">
             {/* ── LEFT: 3D Book ── */}
             <div className="hero-book" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <BookNav
-                navLinks={navLinks}
-                accent={t.accentGlow}
-                onNavigate={(href) => {
-                  const id = href.replace("#","");
-                  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-                }}
-              />
+              <div className="book-shrink">
+                <BookNav
+                  navLinks={navLinks}
+                  accent={t.accentGlow}
+                  onNavigate={(href) => {
+                    const id = href.replace("#","");
+                    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                />
+              </div>
             </div>
 
             {/* ── RIGHT: Hero content ── */}
-            <div className="hero-content" style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+            <div className="hero-content" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
 
-              {/* Main headline — fixed font size for mobile */}
+              {/* Main headline — scales with vw so it always fits the column */}
               <HoverHeading
                 as="h1"
                 text="Building digital"
                 text2="experiences."
                 accent={t.accentGlow}
                 color={t.text}
-                style={{ ...heading, fontSize: "clamp(1.9rem, 4vw, 4.2rem)", lineHeight: 1.1, letterSpacing: "-0.02em", wordBreak: "keep-all", whiteSpace: "normal" }}
+                style={{ ...heading, fontSize: "clamp(1.1rem, 3.6vw, 4.2rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }}
               />
 
               {/* Sub-headline */}
-              <p style={{ fontSize: "clamp(0.9rem,1.8vw,1.2rem)", fontWeight: 600, fontFamily: "Space Grotesk,sans-serif", color: t.accentGlow, letterSpacing: "-0.01em", wordBreak: "keep-all" }}>
+              <p style={{ fontSize: "clamp(0.65rem, 1.5vw, 1.2rem)", fontWeight: 600, fontFamily: "Space Grotesk,sans-serif", color: t.accentGlow, letterSpacing: "-0.01em" }}>
                 with data, code & intelligence.
               </p>
 
               {/* Description */}
-              <p style={{ color: t.textMuted, fontSize: "clamp(0.875rem,1.4vw,1rem)", lineHeight: 1.8, maxWidth: 480, wordBreak: "normal", overflowWrap: "break-word" }}>
-                I design and build software systems across data science, artificial intelligence and modern web technologies — turning complex problems into useful digital products.
+              <p style={{ color: t.textMuted, fontSize: "clamp(0.6rem, 1.2vw, 1rem)", lineHeight: 1.75 }}>
+                I design and build software systems across data science, AI and modern web technologies.
               </p>
 
               {/* Stats row */}
-              <div className="stats-row" style={{ display: "flex", gap: "2rem", flexWrap: "wrap", paddingTop: "0.5rem", borderTop: `1px solid ${t.border}` }}>
-                {[{ num: "5+", label: "Projects" }, { num: "4+", label: "Technologies" }, { num: "2026", label: "Year" }].map(s => (
+              <div className="stats-row" style={{ display: "flex", gap: "clamp(0.5rem,1.5vw,2rem)", flexWrap: "wrap", paddingTop: "0.5rem", borderTop: `1px solid ${t.border}` }}>
+                {[{ num: "5+", label: "Projects" }, { num: "4+", label: "Tech" }, { num: "2026", label: "Year" }].map(s => (
                   <div key={s.label}>
-                    <p style={{ ...heading, fontSize: "1.5rem", color: t.accentGlow, lineHeight: 1 }}>{s.num}</p>
-                    <p style={{ color: t.textMuted, fontSize: "0.7rem", letterSpacing: "0.08em", marginTop: "0.2rem" }}>{s.label}</p>
+                    <p style={{ ...heading, fontSize: "clamp(0.85rem, 2vw, 1.5rem)", color: t.accentGlow, lineHeight: 1 }}>{s.num}</p>
+                    <p style={{ color: t.textMuted, fontSize: "clamp(0.45rem, 0.9vw, 0.7rem)", letterSpacing: "0.06em", marginTop: "0.15rem" }}>{s.label}</p>
                   </div>
                 ))}
               </div>
 
               {/* CTAs */}
-              <div className="cta-row" style={{ display: "flex", gap: "1rem", flexWrap: "wrap", paddingTop: "0.5rem" }}>
-                <a href="#work" style={btn} className="btn-glow" onClick={(e)=>{e.preventDefault();document.getElementById("work")?.scrollIntoView({behavior:"smooth"})}}>
-                  VIEW MY WORK <ArrowRight size={15} />
+              <div className="cta-row" style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+                <a href="#work"
+                  style={{ ...btn, fontSize: "clamp(0.5rem, 1.1vw, 0.875rem)", padding: "clamp(0.4rem,0.8vw,0.75rem) clamp(0.6rem,1.4vw,1.5rem)", gap: "0.3rem" }}
+                  className="btn-glow"
+                  onClick={(e) => { e.preventDefault(); document.getElementById("work")?.scrollIntoView({ behavior: "smooth" }); }}>
+                  VIEW MY WORK <ArrowRight size={11} />
                 </a>
-                <a href="#contact" style={btnOutline} className="btn-glow" onClick={(e)=>{e.preventDefault();document.getElementById("contact")?.scrollIntoView({behavior:"smooth"})}}>
+                <a href="#contact"
+                  style={{ ...btnOutline, fontSize: "clamp(0.5rem, 1.1vw, 0.875rem)", padding: "clamp(0.4rem,0.8vw,0.75rem) clamp(0.6rem,1.4vw,1.5rem)" }}
+                  className="btn-glow"
+                  onClick={(e) => { e.preventDefault(); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}>
                   LET'S TALK
                 </a>
               </div>
